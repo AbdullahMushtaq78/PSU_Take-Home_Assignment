@@ -1,0 +1,26 @@
+OpenVLA
+# These are the commands to setup OpenVLA on Google Colab
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh -b -p /opt/conda
+/opt/conda/bin/conda init bash
+source ~/.bashrc
+conda --version
+conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
+conda create -n openvla python=3.10 -y
+conda activate openvla
+conda install pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia -y
+git clone https://github.com/openvla/openvla.git
+cd openvla
+pip install -e .
+
+
+LIBERO
+# These are the commands to setup LIBERO Simulation on Google Colab for Evaluation of OpenVLA
+git clone https://github.com/Lifelong-Robot-Learning/LIBERO.git
+cd LIBERO
+pip install -r requirements.txt
+pip install -e .
+python benchmark_scripts/download_libero_datasets.py --datasets libero_object
+
+
