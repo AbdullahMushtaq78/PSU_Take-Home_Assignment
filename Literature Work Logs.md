@@ -106,32 +106,10 @@ These results are based on 10 Tasks and 50 episodes per task and Replication res
 
 <h1>Sample Outputs</h1>
 <h2>Task Prompt: pick up the alphabet soup and place it in the basket</h2>
-<div style="display: flex; justify-content: center; gap: 8px;">
-  <div style="text-align: center;">
-    <img src="./output/2026_01_05-21_05_25--episode1--successTrue--taskpick_up_the_alphabet_soup_and_place_it_in_the_bask-ezgif.com-video-to-gif-converter.gif" alt="Episode 1 - Task 1">
-    <div style="margin-top:8px;">
-      <strong>Episode:</strong> 1, <strong>Task:</strong> 1,
-      <strong>Success:</strong> True<br>
-    </div>
-  </div>
 
-  <div style="text-align: center;">
-    <img src="./output/2026_01_05-21_05_25--episode3--successTrue--taskpick_up_the_alphabet_soup_and_place_it_in_the_bask-ezgif.com-video-to-gif-converter.gif" alt="Episode 3 - Task 1">
-    <div style="margin-top:8px;">
-      <strong>Episode:</strong> 3, <strong>Task:</strong> 1,
-      <strong>Success:</strong> True<br>
-    </div>
-  </div>
-  
-  <div style="text-align: center;">
-    <img src="./output/2026_01_05-21_05_25--episode5--successFalse--taskpick_up_the_alphabet_soup_and_place_it_in_the_bask-ezgif.com-video-to-gif-converter.gif" alt="Episode 3 - Task 1">
-    <div style="margin-top:8px;">
-      <strong>Episode:</strong> 5, <strong>Task:</strong> 1,
-      <strong>Success:</strong> False<br>
-    </div>
-  </div>
-
-</div>
+| ![](./output/2026_01_05-21_05_25--episode1--successTrue--taskpick_up_the_alphabet_soup_and_place_it_in_the_bask-ezgif.com-video-to-gif-converter.gif) | ![](./output/2026_01_05-21_05_25--episode3--successTrue--taskpick_up_the_alphabet_soup_and_place_it_in_the_bask-ezgif.com-video-to-gif-converter.gif) | ![](./output/2026_01_05-21_05_25--episode5--successFalse--taskpick_up_the_alphabet_soup_and_place_it_in_the_bask-ezgif.com-video-to-gif-converter.gif) |
+|:--:|:--:|:--:|
+| **Episode:** 1, **Task:** 1, **Success:** True | **Episode:** 3, **Task:** 1, **Success:** True | **Episode:** 5, **Task:** 1, **Success:** False |
 
 
 <h2>Results Graph</h2>
