@@ -1,6 +1,6 @@
 # Logs of My Research (Take-Home Assignment - PSU)
 
-The main idea is to merge everything (control, perception, reasoning and language) into one unified model.
+The current paradigm is to merge everything (control, perception, reasoning and language) into one unified model.
 
 ### Types of models that are the SOTA:
 - Vision Language Action Models (VLAs)
