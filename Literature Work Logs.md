@@ -10,6 +10,7 @@ Vision Language Action Models: Vision-Language-Action (VLA) models unify percept
 
 World Models: understand the dynamics of the real world, including physics and spatial properties through input data, including text, image, video, and movement, to generate videos that simulate realistic physical environments. World models are used to generate custom synthetic data or downstream AI models for training robots and autonomous vehicles.
 
+World models are often used to generate data, latent rollouts, or representations that can be integrated into or fine-tuned with VLA-style policies.
 
 ### Some problems that are right now the main focus on the research community:
 - Lack of Physical Data for large-scale generalization
@@ -74,13 +75,26 @@ World Models: understand the dynamics of the real world, including physics and s
 | DEEPTHINKVLA: ENHANCING REASONING CAPABILITY OF VISION-LANGUAGE-ACTION MODELS | ArXiv | [PDF](./Literature_Review/Papers/2511.15669.pdf) | [DeepThinkVLA](https://github.com/OpenBMB/DeepThinkVLA) |
 | ManualVLA: A Unified VLA Model for Chain-of-Thought Manual Generation and Robotic Manipulation | ArXiv | [PDF](./Literature_Review/Papers/2512.02013.pdf) | Not Released Yet |
 
+---
+</br>
 
 ## Replication:
 - Selected the [OpenVLA](https://github.com/openvla/openvla) as the main replication code, because it is being used by almost every other paper for baseline. 
-### ⚠️⚠️⚠️ **Constraints** ⚠️⚠️⚠️
-- Chose Google Colab as both my laptop and PC does not have enough VRAM to load OpenVLA-7B model.
-- Colab has Nvidia T4 (15GB VRAM) and it's architecture does not support flash-attention (>=Ampere-based GPUs are required) and bitsandbytes are not supported with OpenVLA's environment so sticking wit full precision, and without flash-attention.
-> - Due to the size of the evaluation and episodes per task, I have reduced the number of tasks to only 1 and episodes to 5 instead of original 10 tasks and 50 episodes. This will make it feasible to run and produce some reproducible and comparable results, instead of complete tasks which will take 5-6 days based on the current available resources, and colab also does not allow background execution.
+### ⚠️ **Constraints** ⚠️
+
+- My local hardware (laptop and PC) did not have sufficient VRAM to run the OpenVLA-7B model.
+- Used Google Colab, which provides only Nvidia `T4 GPUs` (15GB VRAM).
+- Colab's Nvidia T4 architecture does not support flash-attention (requires Ampere or newer).
+- `bitsandbytes` is also incompatible with OpenVLA's environment, so reduced/quantized precision could not be used.
+- Due to Colab limitations, long-running jobs are frequently interrupted (no background execution, session timeouts).
+
+
+### ✅ Approaches and Adaptations Taken
+
+- Restricted model execution to full precision only (no quantization, no flash-attention), for compatibility and correctness.
+- Reduced evaluation load by running only **1 task** and **5 episodes** (instead of the original 10 tasks x 50 episodes), to ensure at least partial results could be completed within Colab's session limits.
+- Prioritized demonstration of reproducibility and trend alignment with reported results, rather than aiming for exhaustive/statistically significant benchmarking.
+- Chose OpenVLA because of its use as a primary baseline in much of the literature, and adapted its setup scripts for Colab execution by following the installation constraints above.
 
 ### Configurations:
 - `Model`: `openvla/openvla-7b-finetuned-libero-object`
@@ -105,6 +119,8 @@ World Models: understand the dynamics of the real world, including physics and s
 
 The numbers are mentioned here: [Paper Results Table](https://github.com/openvla/openvla?tab=readme-ov-file#openvla-fine-tuning-results)
 These results are based on 10 Tasks and 50 episodes per task and Replication results are based on only 1 Task and 5 episodes because of the the resources that I had access to, to replicate these results. Unfortunately, Google Colab keep running out of credits and I have to wait hours to try again later. 
+
+> Given the very small number of episodes, these results are not statistically significant and are only meant to verify correctness of the setup and trend-level consistency with reported results.
 
 <h1>Sample Outputs</h1>
 <h2>Task Prompt: pick up the alphabet soup and place it in the basket</h2>
@@ -131,7 +147,7 @@ These results are based on 10 Tasks and 50 episodes per task and Replication res
 These ideas should not require huge amount of compute, preferably within Google Colab, otherwise it would be impossible to do anything that requires a lot of compute and time.
 
 
-1. Language Perturbation on Task Efficiency
+1. Language Perturbation - Instruction-level distribution shift
     - Check the performance of the model perturbation of Task Prompt. Use another model to apply perturbation on runtime while keep the main goal intact. This will test the robustness of the model to language perturbation to effectively show model's zero-shot performance on the same task and goal but different and slightly confusing wording.  
 2. Visual Inconsistency Invariance:
     - Check model's robustness to visual changes that are not in the original dataset like changing the color of the basket's or soup's texture. This will test the model's vision generalization ability.  
