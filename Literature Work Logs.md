@@ -77,6 +77,7 @@ World Models: understand the dynamics of the real world, including physics and s
 
 ## Replication:
 - Selected the [OpenVLA](https://github.com/openvla/openvla) as the main replication code, because it is being used by almost every other paper for baseline. 
+### ⚠️⚠️⚠️ **Constraints** ⚠️⚠️⚠️
 - Chose Google Colab as both my laptop and PC does not have enough VRAM to load OpenVLA-7B model.
 - Colab has Nvidia T4 (15GB VRAM) and it's architecture does not support flash-attention (>=Ampere-based GPUs are required) and bitsandbytes are not supported with OpenVLA's environment so sticking wit full precision, and without flash-attention.
 > - Due to the size of the evaluation and episodes per task, I have reduced the number of tasks to only 1 and episodes to 5 instead of original 10 tasks and 50 episodes. This will make it feasible to run and produce some reproducible and comparable results, instead of complete tasks which will take 5-6 days based on the current available resources, and colab also does not allow background execution.
