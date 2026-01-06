@@ -1,4 +1,40 @@
-# Logs of My Research (Take-Home Assignment - PSU)
+# Take-Home Assignment - Penn State University
+
+
+
+## Table of Contents
+
+- [Take-Home Assignment - Penn State University](#take-home-assignment---penn-state-university)
+  - [Take-Home Assignment](#take-home-assignment)
+  - [Introduction](#introduction)
+    - [Types of models that are the SOTA](#types-of-models-that-are-the-sota)
+    - [Research Problems](#research-problems)
+    - [Generalization Specific Problems](#generalization-specific-problems)
+    - [Generalization Problem Choice](#generalization-problem-choice)
+  - [Literature Work](#literature-work)
+    - [Top Models](#top-models)
+    - [Datasets and Benchmarks](#datasets-and-benchmarks)
+    - [Latest Research Papers on Generalization](#latest-research-papers-on-generalization)
+  - [Replication](#replication)
+    - [Constraints](#constraints)
+    - [Approaches Taken due to Constraints](#approaches-taken-due-to-constraints)
+    - [Configurations](#configurations)
+    - [Results Logs](#results-logs)
+    - [Comparison with paper results](#comparison-with-paper-results)
+    - [Sample Outputs](#sample-outputs)
+  - [New Ideas](#new-ideas)
+  - [To-Do / Progress Checklist](#to-do--progress-checklist)
+
+## Take-Home Assignment:
+
+> **Take-home assignment**: Choose one specific generalization problem in the areas of embodied AI or robotics, and finish the following. </br>
+> - Identify the SOTA method </br>
+> - Replicate the code </br>
+> - Propose some new ideas </br>
+> - Implement one specific idea </br>
+
+
+## Introduction
 
 The current paradigm is to merge everything (control, perception, reasoning and language) into one unified model.
 
@@ -6,13 +42,16 @@ The current paradigm is to merge everything (control, perception, reasoning and 
 - Vision Language Action Models (VLAs)
 - World Models
 
-Vision Language Action Models: Vision-Language-Action (VLA) models unify perception and motor control into a single transformer-based architecture.
+**Vision Language Action Models**: Vision-Language-Action (VLA) models unify perception and motor control into a single transformer-based architecture.
 
-World Models: understand the dynamics of the real world, including physics and spatial properties through input data, including text, image, video, and movement, to generate videos that simulate realistic physical environments. World models are used to generate custom synthetic data or downstream AI models for training robots and autonomous vehicles.
+**World Models**: These understand the dynamics of the real world, including physics and spatial properties through input data, including text, image, video, and movement, to generate videos that simulate realistic physical environments. World models are used to generate custom synthetic data or downstream AI models for training robots and autonomous vehicles.
 
 World models are often used to generate data, latent rollouts, or representations that can be integrated into or fine-tuned with VLA-style policies.
 
-### Some problems that are right now the main focus on the research community:
+### Research Problems
+
+Some problems that are the main focus right now in the research community:
+
 - Lack of Physical Data for large-scale generalization
 - Cross-Embodiment Generalization
 - Zero-shot Task Generalization
@@ -79,7 +118,9 @@ World models are often used to generate data, latent rollouts, or representation
 </br>
 
 ## Replication:
-- Selected the [OpenVLA](https://github.com/openvla/openvla) as the main replication code, because it is being used by almost every other paper for baseline. 
+- Selected the [OpenVLA](https://github.com/openvla/openvla) as the main replication code, because it is being used by almost every other paper for baseline.
+- Selected LIBERO for evaluation as it is based on a simulation-based robot arm. The main benchmark `BridgeData V2 WidowX` that is used in the paper is based on having an actual robot which is not feasible.
+ 
 ### ⚠️ **Constraints** ⚠️
 
 - My local hardware (laptop and PC) did not have sufficient VRAM to run the OpenVLA-7B model.
@@ -89,7 +130,7 @@ World models are often used to generate data, latent rollouts, or representation
 - Due to Colab limitations, long-running jobs are frequently interrupted (no background execution, session timeouts).
 
 
-### ✅ Approaches and Adaptations Taken
+### ✅ Approaches Taken due to Constraints
 
 - Restricted model execution to full precision only (no quantization, no flash-attention), for compatibility and correctness.
 - Reduced evaluation load by running only **1 task** and **5 episodes** (instead of the original 10 tasks x 50 episodes), to ensure at least partial results could be completed within Colab's session limits.
@@ -107,15 +148,15 @@ World models are often used to generate data, latent rollouts, or representation
 | Task id | Episode # | Task Prompt | Success | Accuracy &uarr; |
 |--------|-----------|-------------|---------|---------|
 | 1 | 1 | pick up the alphabet soup and place it in the basket | <span style="color: green;">True</span> | 100% |
-| 1 | 1 | pick up the alphabet soup and place it in the basket | <span style="color: green;">True</span>  | 100% |
-| 1 | 1 | pick up the alphabet soup and place it in the basket | <span style="color: green;">True</span>  | 100% |
-| 1 | 1 | pick up the alphabet soup and place it in the basket | <span style="color: green;">True</span>  | 100% |
-| 1 | 1 | pick up the alphabet soup and place it in the basket | <span style="color: red;">False</span>  | 80% |
+| 1 | 2 | pick up the alphabet soup and place it in the basket | <span style="color: green;">True</span>  | 100% |
+| 1 | 3 | pick up the alphabet soup and place it in the basket | <span style="color: green;">True</span>  | 100% |
+| 1 | 4 | pick up the alphabet soup and place it in the basket | <span style="color: green;">True</span>  | 100% |
+| 1 | 5 | pick up the alphabet soup and place it in the basket | <span style="color: red;">False</span>  | 80% |
 
 ### Comparison with paper results:
 | Paper Accuracy | Replication Accuracy |
 |----------------|----------------------|
-|88.4% | 80% |
+|  88.4% | 80% |
 
 The numbers are mentioned here: [Paper Results Table](https://github.com/openvla/openvla?tab=readme-ov-file#openvla-fine-tuning-results)
 These results are based on 10 Tasks and 50 episodes per task and Replication results are based on only 1 Task and 5 episodes because of the the resources that I had access to, to replicate these results. Unfortunately, Google Colab keep running out of credits and I have to wait hours to try again later. 
@@ -146,8 +187,14 @@ These results are based on 10 Tasks and 50 episodes per task and Replication res
 
 These ideas should not require huge amount of compute, preferably within Google Colab, otherwise it would be impossible to do anything that requires a lot of compute and time.
 
-
 1. Language Perturbation - Instruction-level distribution shift
     - Check the performance of the model perturbation of Task Prompt. Use another model to apply perturbation on runtime while keep the main goal intact. This will test the robustness of the model to language perturbation to effectively show model's zero-shot performance on the same task and goal but different and slightly confusing wording.  
 2. Visual Inconsistency Invariance:
     - Check model's robustness to visual changes that are not in the original dataset like changing the color of the basket's or soup's texture. This will test the model's vision generalization ability.  
+
+## To-Do / Progress Checklist
+- [x] Literature Review  
+- [x] Identification of SOTA methods  
+- [x] Code Replication (OpenVLA code will be uploaded soon)
+- [x] New Ideas  
+- [ ] Implementation of One New Idea  
