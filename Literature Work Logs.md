@@ -62,6 +62,7 @@ World Models: understand the dynamics of the real world, including physics and s
 |-------|------|
 | Open X-Embodiment: Robotic Learning Datasets and RT-X Models | [Website](https://robotics-transformer-x.github.io/) |
 | RDT2: Enabling Zero-Shot Cross-Embodiment Generalization by Scaling Up UMI Data | [Website](https://rdt-robotics.github.io/rdt2/#) | 
+| LIBERO | [Website](https://libero-project.github.io/main.html) | 
 
 
 ### Latest Research Papers on Generalization:
