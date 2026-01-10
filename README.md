@@ -23,7 +23,14 @@
     - [Comparison with paper results](#comparison-with-paper-results)
     - [Sample Outputs](#sample-outputs)
   - [New Ideas](#new-ideas)
+    - [Implementation of New Idea (#1): Language Perturbation](#implementation-of-new-idea-1-language-perturbation)
+      - [Instruction-Level Distribution Shift](#instruction-level-distribution-shift)
+      - [Original OpenVLA Architecture](#original-openvla-architecture)
+      - [OpenVLA Architecture with Language Perturbation Module](#openvla-architecture-with-language-perturbation-module)
+      - [What This Tests](#what-this-tests)
+      - [Why This Is Compute-Feasible](#why-this-is-compute-feasible)
   - [To-Do / Progress Checklist](#to-do--progress-checklist)
+
 
 ## Take-Home Assignment:
 
