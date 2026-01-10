@@ -283,6 +283,7 @@ Performance differences therefore isolate the model’s **robustness to linguist
 
 > This experiment evaluates whether OpenVLA’s policy execution is invariant to semantic-preserving perturbations in natural language instructions, providing a lightweight probe of zero-shot generalization.
 
+These diagrams are recreated by my own, taking inspiration from the paper's original architecture figures, along with the inclusion of Language Perturbation Module (2nd image) and can be viewed [here](https://docs.google.com/presentation/d/16LPqdeaJaVlvph1yVrUXLNK7bVtmnTGQazirvfQYjA8/edit?usp=sharing) (with GIFs). 
 
 ## To-Do / Progress Checklist
 - [x] Literature Review  
