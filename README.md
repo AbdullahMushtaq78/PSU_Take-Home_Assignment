@@ -22,13 +22,17 @@
     - [Results Logs](#results-logs)
     - [Comparison with paper results](#comparison-with-paper-results)
     - [Sample Outputs](#sample-outputs)
-  - [New Ideas](#new-ideas)
-    - [Implementation of New Idea (#1): Language Perturbation](#implementation-of-new-idea-1-language-perturbation)
-      - [Instruction-Level Distribution Shift](#instruction-level-distribution-shift)
-      - [Original OpenVLA Architecture](#original-openvla-architecture)
-      - [OpenVLA Architecture with Language Perturbation Module](#openvla-architecture-with-language-perturbation-module)
-      - [What This Tests](#what-this-tests)
-      - [Why This Is Compute-Feasible](#why-this-is-compute-feasible)
+- [New Ideas](#new-ideas)
+  - [Implementation of New Idea (#1): Language Perturbation](#implementation-of-new-idea-1-language-perturbation)
+    - [Instruction-Level Distribution Shift for Zero-Shot Generalization](#instruction-level-distribution-shift-for-zero-shot-generalization)
+    - [Baseline: Original OpenVLA Architecture](#baseline-original-openvla-architecture)
+    - [Proposed Extension: Language Perturbation Module](#proposed-extension-language-perturbation-module)
+    - [What This Tests (Explicitly)](#what-this-tests-explicitly)
+    - [Why This Is Compute-Feasible and Scientifically Useful](#why-this-is-compute-feasible-and-scientifically-useful)
+    - [Experimental Setup for Language Perturbation](#experimental-setup-for-language-perturbation)
+    - [Results (Language Perturbation Experiment)](#results-language-perturbation-experiment)
+    - [Comparison with Non-Perturbed Baseline](#comparison-with-non-perturbed-baseline)
+    - [Observations and Limitations](#observations-and-limitations)
   - [To-Do / Progress Checklist](#to-do--progress-checklist)
 
 
@@ -295,18 +299,24 @@ To evaluate the effect of instruction-level language perturbations, I ran the sa
 ### Results Logs:
 
 | Task id | Episode # | Task Prompt (Perturbed)                              | Success                                 | Accuracy ↑ |
-| ------- | --------- | ---------------------------------------------------- | --------------------------------------- | ---------- |
-| 1       | 1         | pick up the alphabet soup and place it in the basket | <span style="color: green;">True</span> | 100%       |
-| 1       | 2         | pick up the alphabet soup and place it in the basket | <span style="color: red;">False</span>  | 50%         |
-| 1       | 3         | pick up the alphabet soup and place it in the basket | <span style="color: green;">True</span> | 66%       |
-| 1       | 4         | pick up the alphabet soup and place it in the basket | <span style="color: red;">False</span>  | 50%         |
-| 1       | 5         | pick up the alphabet soup and place it in the basket | <span style="color: red;">False</span>  | 40%         |
+|--------|-----------|------------------------------------------------------|------------------------------------------|------------|
+| 1      | 1         | pick up the alphabet soup and place it in the basket | <span style="color: green;">True</span> | 100%       |
+| 1      | 2         | pick up the alphabet soup and place it in the basket | <span style="color: red;">False</span>  | 50%        |
+| 1      | 3         | pick up the alphabet soup and place it in the basket | <span style="color: green;">True</span> | 66%        |
+| 1      | 4         | pick up the alphabet soup and place it in the basket | <span style="color: red;">False</span>  | 50%        |
+| 1      | 5         | pick up the alphabet soup and place it in the basket | <span style="color: red;">False</span>  | 40%        |
 
 ### Aggregate Accuracy:
 
-| Replication (No Perturbation) | Language Perturbation (new idea) | Original Results |
-| ----------------------------- | --------------------- |------------------|
-| 80%                           | 40%                   | 88%              |
+| Setting                          | Accuracy |
+|----------------------------------|----------|
+| Replication (No Perturbation)    | 80%      |
+| Language Perturbation (New Idea) | 40%      |
+| Original Paper Results           | 88%      |
+
+### Results Graph
+
+![](/output/openvla_language_perturbation_accuracy_per_episode.png)
 
 ### Interpretation
 
