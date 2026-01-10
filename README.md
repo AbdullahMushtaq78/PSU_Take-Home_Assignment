@@ -192,9 +192,94 @@ These ideas should not require huge amount of compute, preferably within Google 
 2. Visual Inconsistency Invariance:
     - Check model's robustness to visual changes that are not in the original dataset like changing the color of the basket's or soup's texture. This will test the model's vision generalization ability.  
 
+
+## Implementation of New Idea (#1): Language Perturbation  
+### Instruction-Level Distribution Shift for Zero-Shot Generalization
+
+This experiment evaluates **zero-shot instruction robustness** in Vision-Language-Action (VLA) models by introducing **controlled language perturbations** at inference time while preserving the underlying task semantics.
+
+The core hypothesis is that if a VLA model truly grounds language in perception and action, it should remain performant under **instruction-level distribution shift**, where the surface form of the instruction changes but the intended goal remains identical.
+
+---
+
+### Baseline: Original OpenVLA Architecture
+
+In the standard OpenVLA pipeline, visual observations are processed by **SigLIP** and **DINOv2** encoders, while the natural language task instruction is tokenized using the **LLaMA tokenizer**.
+
+- Visual embeddings from SigLIP and DINOv2 are projected via an MLP projector.
+- Text tokens and projected visual features are jointly processed by a **LLaMA-2 7B** backbone.
+- The model autoregressively predicts **action tokens**, representing:
+  - Cartesian end-effector deltas (`Δx`)
+  - Rotational deltas (`Δθ`)
+  - Gripper open/close commands
+
+This architecture directly maps multimodal inputs to low-level robot actions without explicit symbolic planning.
+
+![](./output/openvla_system_arch.png)
+
+---
+
+### Proposed Extension: Language Perturbation Module
+
+To probe zero-shot generalization under language variation, I introduce a **Language Perturbation Module** that operates *only at inference time*.
+
+- The original task instruction (`Task_Description`) is passed to a **GPT-5–based LLM agent** before being fed into OpenVLA.
+- The agent rewrites the instruction according to a strict system-level prompt that:
+  - Preserves the original task goal and object references
+  - Introduces mild ambiguity, indirect phrasing, or uncommon wording
+  - Avoids adding new constraints, steps, or task objectives
+
+The perturbation process is deterministic in structure and produces a **structured output**:
+
+```json
+{
+  "rephrased_output": "..."
+}
+````
+
+This ensures seamless integration with the existing OpenVLA evaluation pipeline.
+
+The perturbation agent is implemented using the **OpenAI Agents SDK**, and its rules and constraints are fully specified in
+[`new_idea_code/llm_lang_pertub.py`](./new_idea_code/llm_lang_pertub.py).
+
+![](./output/openvla_new_idea_arch.png)
+
+---
+
+### What This Tests (Explicitly)
+
+This setup induces an **instruction-level distribution shift** while keeping:
+
+* Visual observations unchanged
+* Task goal unchanged
+* Environment unchanged
+* Policy weights frozen
+
+Performance differences therefore isolate the model’s **robustness to linguistic variation**, serving as a targeted test of:
+
+* Language grounding quality
+* Instruction understanding beyond surface-level memorization
+* Zero-shot generalization under semantic-preserving perturbations
+
+---
+
+### Why This Is Compute-Feasible and Scientifically Useful
+
+* Requires **no retraining or fine-tuning**
+* Adds negligible overhead compared to full VLA inference
+* Can be evaluated on small task and episode subsets
+* Aligns with current research directions in **instruction robustness**, **language grounding**, and **generalist robot policies**
+
+---
+
+### Summary
+
+> This experiment evaluates whether OpenVLA’s policy execution is invariant to semantic-preserving perturbations in natural language instructions, providing a lightweight probe of zero-shot generalization.
+
+
 ## To-Do / Progress Checklist
 - [x] Literature Review  
 - [x] Identification of SOTA methods  
-- [x] Code Replication (OpenVLA code will be uploaded soon)
+- [x] Code Replication (Only the files that are changed are shared here due to the file sizes issue)
 - [x] New Ideas  
-- [ ] Implementation of One New Idea  
+- [x] Implementation of One New Idea  
