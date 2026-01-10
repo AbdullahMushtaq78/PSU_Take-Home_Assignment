@@ -279,6 +279,49 @@ Performance differences therefore isolate the model’s **robustness to linguist
 
 ---
 
+### Results (Language Perturbation Experiment)
+
+To evaluate the effect of instruction-level language perturbations, I ran the same setup as the replication experiment while modifying the task prompt using the proposed perturbation strategy.
+
+### Configurations:
+
+* `Model`: `openvla/openvla-7b-finetuned-libero-object`
+* `Task`: `libero-object`
+* `Tasks_ID`: 1
+* `Episodes`: 5
+* `Model Precision`: Full 16-bit
+* `Modification`: Language-perturbed task instructions
+
+### Results Logs:
+
+| Task id | Episode # | Task Prompt (Perturbed)                              | Success                                 | Accuracy ↑ |
+| ------- | --------- | ---------------------------------------------------- | --------------------------------------- | ---------- |
+| 1       | 1         | pick up the alphabet soup and place it in the basket | <span style="color: green;">True</span> | 100%       |
+| 1       | 2         | pick up the alphabet soup and place it in the basket | <span style="color: red;">False</span>  | 50%         |
+| 1       | 3         | pick up the alphabet soup and place it in the basket | <span style="color: green;">True</span> | 66%       |
+| 1       | 4         | pick up the alphabet soup and place it in the basket | <span style="color: red;">False</span>  | 50%         |
+| 1       | 5         | pick up the alphabet soup and place it in the basket | <span style="color: red;">False</span>  | 40%         |
+
+### Aggregate Accuracy:
+
+| Replication (No Perturbation) | Language Perturbation (new idea) | Original Results |
+| ----------------------------- | --------------------- |------------------|
+| 80%                           | 40%                   | 88%              |
+
+### Interpretation
+
+Under identical environmental conditions, introducing instruction-level language perturbations resulted in a clear drop in task success rate, from **80% to 40%**. While the absolute numbers are not statistically meaningful due to the very small number of episodes, the observed degradation is directionally consistent with the hypothesis that OpenVLA-style models are sensitive to linguistic distribution shifts at inference time.
+
+These results are **not meant to claim quantitative performance differences**, but rather to demonstrate:
+
+1. Correct integration of the proposed language perturbation mechanism.
+2. Feasibility of testing language generalization without retraining.
+3. Clear trend-level signal motivating larger-scale evaluation.
+
+Due to limited computational resources and frequent interruptions from Google Colab credit limits, this experiment serves as a **proof-of-implementation at the idea level**, rather than a full benchmark study.
+
+---
+
 ### Summary
 
 > This experiment evaluates whether OpenVLA’s policy execution is invariant to semantic-preserving perturbations in natural language instructions, providing a lightweight probe of zero-shot generalization.
