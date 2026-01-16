@@ -298,13 +298,13 @@ To evaluate the effect of instruction-level language perturbations, I ran the sa
 
 ### Results Logs:
 
-| Task id | Episode # | Task Prompt (Perturbed)                              | Success                                 | Accuracy ↑ |
-|--------|-----------|------------------------------------------------------|------------------------------------------|------------|
-| 1      | 1         | pick up the alphabet soup and place it in the basket | <span style="color: green;">True</span> | 100%       |
-| 1      | 2         | pick up the alphabet soup and place it in the basket | <span style="color: red;">False</span>  | 50%        |
-| 1      | 3         | pick up the alphabet soup and place it in the basket | <span style="color: green;">True</span> | 66%        |
-| 1      | 4         | pick up the alphabet soup and place it in the basket | <span style="color: red;">False</span>  | 50%        |
-| 1      | 5         | pick up the alphabet soup and place it in the basket | <span style="color: red;">False</span>  | 40%        |
+| Task id | Episode # | Task Prompt (Perturbed)                                     | Success                                 | Accuracy ↑ |
+|--------|-----------|------------------------------------------------------        |------------------------------------------|------------|
+| 1      | 1         | take hold of the alphabet soup and deposit it in the basket  | <span style="color: green;">True</span> | 100%       |
+| 1      | 2         | Take hold of the alphabet soup and deposit it into the basket. | <span style="color: red;">False</span>  | 50%        |
+| 1      | 3         | pick up the alphabet soup and tuck it into the basket | <span style="color: green;">True</span> | 66%        |
+| 1      | 4         | Take hold of the alphabet soup and deposit it into the basket. | <span style="color: red;">False</span>  | 50%        |
+| 1      | 5         | Take hold of the alphabet soup and put it into the basket. | <span style="color: red;">False</span>  | 40%        |
 
 ### Aggregate Accuracy:
 
