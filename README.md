@@ -217,7 +217,7 @@ The core hypothesis is that if a VLA model truly grounds language in perception 
 
 In the standard OpenVLA pipeline, visual observations are processed by **SigLIP** and **DINOv2** encoders, while the natural language task instruction is tokenized using the **LLaMA tokenizer**.
 
-- Visual embeddings from SigLIP and DINOv2 are projected via an MLP projector.
+- Visual embeddings from SigLIP (Aligns vision with language semantics) and DINOv2 (for dense visual embeddings) are projected via an MLP projector (to project the input to Llama's token space).
 - Text tokens and projected visual features are jointly processed by a **LLaMA-2 7B** backbone.
 - The model autoregressively predicts **action tokens**, representing:
   - Cartesian end-effector deltas (`Δx`)
